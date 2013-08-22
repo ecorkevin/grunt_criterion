@@ -25,10 +25,21 @@ module.exports = function(grunt) {
         }],
       },
     },
+    watch: {
+      scripts: {
+        files: ['*.js'],
+        tasks: ['jshint'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
   });
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('default', ['jshint']);
   grunt.registerTask('b', ['beautify']);
   grunt.registerTask('c', ['copyright']);
+  grunt.registerTask('w', ['watch']);
 };

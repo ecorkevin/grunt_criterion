@@ -34,4 +34,12 @@ Fires a webserver on port 3000 that keeps track of your log.json file for easy v
 
 		localhost:3000
 
-to view any errors.  Refreshing the page after a grunt will also show the latest errors/changes to your directory
+to view any errors.  Refreshing the page after a grunt will also show the latest errors/changes to your directory.
+
+### <tt>Watcher</tt>
+
+To make that table above even easier to use, you can run
+
+		grunt watch
+		
+on your directory.  Every changed file will be jshinted, and all errors automatically will show up on localhost

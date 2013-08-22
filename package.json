@@ -8,7 +8,8 @@
   },
   "devDependencies": {
     "js-beautify": "~1.4.0",
-    "express": "~3.3.5"
+    "express": "~3.3.5",
+    "grunt-contrib-watch": "~0.5.2"
   },
   "repository": {
     "type": "git",
