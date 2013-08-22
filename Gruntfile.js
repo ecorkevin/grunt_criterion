@@ -1,14 +1,12 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
-      all: {
-        all: ['*.js'],
-        options: {
-          reporter: 'default',
-          reporterOutput: 'log.json',
-          '-W117': true,
-          '-W099': true
-        },
+      all: ['*.js'],
+      options: {
+        reporter: 'default',
+        reporterOutput: 'log.json',
+        '-W117': true,
+        '-W099': true
       },
     },
     beautify: {
