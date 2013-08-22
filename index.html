@@ -1,0 +1,34 @@
+<html><head><title>Error Report</title>    
+	
+<style type="text/css">
+.pretty { outline: 1px solid black;}
+.prettyred { outline: 1px solid red; color:red;}
+.prettyblue { outline: 1px solid blue; color:blue;}
+.prettygreen { outline: 1px solid green; color:green}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<body>
+	<div id="div1">
+	</div>
+
+<script>
+var obj = $.getJSON("log.json", function(data){
+var table = '<table>';
+for (var i=0; i<data.report.length; i++) {
+  table += '<tr class="pretty">';
+  table += '<td>'+data.report[i].file+'</td>';
+  table += '<td class="prettyred">'+data.report[i].error.reason+'</td>';
+  table += '<td class="pretty">'+data.report[i].error.code+'</td>';
+  table += '<th>Line</th><td class="prettygreen">'+data.report[i].error.line+'</td>';
+  table += '<th>Char</th><td class="prettyblue">'+data.report[i].error.character+'</td>';
+  table += '<td>'+data.report[i].error.evidence+'</td>';
+  table += '</tr>';
+}
+table += '</table>';
+$('#div1').append(table);
+	});
+
+</script>
+</body>
+</html>
+
