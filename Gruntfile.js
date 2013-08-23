@@ -5,7 +5,7 @@ module.exports = function(grunt) {
       options: {
         reporter: 'default',
         reporterOutput: 'log.json',
-        '-W117': true,
+        //'-W117': true,
         '-W099': true
       },
     },
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
             config: 'jsduck.main.src', // arbitray name or config for any other grunt task
             type: 'input', // list, checkbox, confirm, input, password
             message: 'comma separated list of paths to document (no spaces)',
-            default: 'default', // default value if nothing is entered
+            'default': 'default', // default value if nothing is entered
             choices: 'Array|Function(answers)',
             filter: function(value) {
               var n = value.split(",");

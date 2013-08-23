@@ -20,7 +20,7 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('mochaCoverageReport', 'Generates coverage report, based on "mocha test"', function() {
     var done = this.async();
-    exec('istanbul cover node_modules/mocha/bin/_mocha --ui tdd', function(error, stdout, stderr) {
+    exec('istanbul cover node_modules/mocha/bin/_mocha mongoose/test', function(error, stdout, stderr) {
       console.log(error);
       done();
     });

@@ -1,3 +1,4 @@
+//THIS IS A NEW COMMENT
 var express = require('express');
 var fs = require('fs');
 var express = require("express");
@@ -15,5 +16,5 @@ app.get('/log.json', function(request, response) {
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
   console.log("Listening on " + port);
-  server.close(); //for istanbul coverage test
+  //server.close(); //for istanbul coverage test
 });

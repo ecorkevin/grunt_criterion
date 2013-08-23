@@ -9,7 +9,6 @@
 
 Outputs a list of errors to log.json.  By default, ignores the following errors:
 
-		{a}' is not defined. -- W117
 		Mixed spaces and tabs -- W099
 		
 ### <tt>BEAUTIFY</tt>
