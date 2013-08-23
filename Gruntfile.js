@@ -49,7 +49,7 @@ module.exports = function(grunt) {
             config: 'jsduck.main.src', // arbitray name or config for any other grunt task
             type: 'input', // list, checkbox, confirm, input, password
             message: 'comma separated list of paths to document (no spaces)',
-            default: 'fandangle', // default value if nothing is entered
+            default: 'default', // default value if nothing is entered
             choices: 'Array|Function(answers)',
             filter: function(value) {
               var n = value.split(",");
@@ -84,5 +84,5 @@ module.exports = function(grunt) {
   grunt.registerTask('w', ['watch']);
   grunt.registerTask('cover', ['writeFilesforCoverage', 'runCoverage']);
   grunt.registerTask('mocha', ['mochaCoverageReport']);
-  grunt.registerTask('ppp', ['prompt', 'jsduck']);
+  grunt.registerTask('duck', ['prompt', 'jsduck']);
 };

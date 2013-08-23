@@ -57,3 +57,11 @@ If you're so inclined, you can run coverage tests on each js file in your direct
 		grunt cover
 
 Your coverage test will be outputted to /coverage.
+
+### <tt>JS DUCK</tt>
+
+If you'd like to document your code using jsduck format, just simply run
+
+		grunt duck
+		
+You'll be prompted for input directories (comma delimited list, no spaces), and docs will output to /docs
