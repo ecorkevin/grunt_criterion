@@ -43,3 +43,17 @@ To make that table above even easier to use, you can run
 		grunt watch
 		
 on your directory.  Every changed file will be jshinted, and all errors automatically will show up on localhost
+
+### <tt>Code Coverage</tt>
+
+You want coverage tests of your code?  Write your own mocha tests, and run
+
+		grunt mocha
+
+Your coverage test will be outputted to /coverage
+
+If you're so inclined, you can run coverage tests on each js file in your directory.  Run
+
+		grunt cover
+
+Your coverage test will be outputted to /coverage.

@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       all: {
         files: [{
           expand: true,
-          src: ['*.js']
+          src: ['*.js', 'tasks/*.js']
         }],
       },
     },
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       all: {
         files: [{
           expand: true,
-          src: ['*.js']
+          src: ['*.js', '-web.js']
         }],
       },
     },
@@ -34,12 +34,55 @@ module.exports = function(grunt) {
         },
       },
     },
+    writeFilesforCoverage: {
+      all: {
+        files: [{
+          expand: true,
+          src: ['*.js']
+        }],
+      },
+    },
+    prompt: {
+      target: {
+        options: {
+          questions: [{
+            config: 'jsduck.main.src', // arbitray name or config for any other grunt task
+            type: 'input', // list, checkbox, confirm, input, password
+            message: 'comma separated list of paths to document (no spaces)',
+            default: 'fandangle', // default value if nothing is entered
+            choices: 'Array|Function(answers)',
+            filter: function(value) {
+              var n = value.split(",");
+              return n;
+            }
+          }]
+        }
+      },
+    },
+    jsduck: {
+      main: {
+        // source paths with your code
+        src: [''],
+        // docs output dir
+        dest: 'docs',
+        // extra options
+        options: {
+          'builtin-classes': true,
+          'external': ['XMLHttpRequest']
+        },
+      },
+    },
   });
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-jsduck');
+  grunt.loadNpmTasks('grunt-prompt');
   grunt.registerTask('default', ['jshint']);
   grunt.registerTask('b', ['beautify']);
   grunt.registerTask('c', ['copyright']);
   grunt.registerTask('w', ['watch']);
+  grunt.registerTask('cover', ['writeFilesforCoverage', 'runCoverage']);
+  grunt.registerTask('mocha', ['mochaCoverageReport']);
+  grunt.registerTask('ppp', ['prompt', 'jsduck']);
 };

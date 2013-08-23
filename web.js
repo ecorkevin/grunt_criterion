@@ -13,6 +13,7 @@ app.get('/log.json', function(request, response) {
   response.send(string);
 });
 var port = process.env.PORT || 3000;
-app.listen(port, function() {
+var server = app.listen(port, function() {
   console.log("Listening on " + port);
+  server.close(); //for istanbul coverage test
 });
