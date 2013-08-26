@@ -1,24 +1,43 @@
 {
-  "name": "grunt_formatter",
-  "version": "0.0.0",
-  "description": "grunt_formatter",
-  "dependencies": {
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt": "~0.4.1"
-  },
-  "devDependencies": {
-    "js-beautify": "~1.4.0",
-    "express": "~3.3.5",
-    "grunt-contrib-watch": "~0.5.2",
-    "nodeunit": "~0.8.1",
-    "grunt-prompt": "~0.1.2",
-    "mocha": "~1.12.0"
+  "name": "grunt-criterion",
+  "description": "Helps keep code to defined standards",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ecorkevin/grunt_criterion",
+  "author": {
+    "name": "Kevin Moritz",
+    "email": "kevinecor@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ecorkevin/grunt_formatter.git"
+    "url": "git://github.com/ecorkevin/grunt_criterion.git"
   },
-  "author": "Kevin Moritz",
-  "license": "BSD",
-  "readmeFilename": "README.md"
+  "bugs": {
+    "url": "https://github.com/ecorkevin/grunt_criterion/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ecorkevin/grunt_criterion/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt": "~0.4.1",
+    "js-beautify": "~1.4.0",
+    "express": "~3.3.5",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-prompt": "~0.1.2",
+    "mocha": "~1.12.0",
+    "live-reload": "~0.2.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
 }

@@ -1,7 +1,25 @@
-<tt>grunt_formatter</tt>
+<tt>grunt_criterion</tt>
 ===============
 
-**Takes all .js files inside of the working directory and runs one or more of the following tasks**
+> Helps keep code to defined standards
+
+### <tt>Getting Started</tt>
+This plugin requires Grunt `~0.4.1`
+
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+
+```
+npm install grunt-criterion --save-dev
+```
+
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+
+```js
+grunt.loadNpmTasks('grunt-criterion');
+```
+
+
+**Takes .js files inside of the working directory and runs one or more of the following tasks**
 
 ### <tt>JSHINT</tt>
 
@@ -41,7 +59,7 @@ To make that table above even easier to use, you can run
 
 		grunt watch
 		
-on your directory.  Every changed file will be jshinted, and all errors automatically will show up on localhost
+on your directory.  Every changed file will be jshinted, and all errors will automatically show up on localhost
 
 ### <tt>Code Coverage</tt>
 

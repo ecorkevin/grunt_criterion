@@ -5,7 +5,7 @@ module.exports = function(grunt) {
       options: {
         reporter: 'default',
         reporterOutput: 'log.json',
-        //'-W117': true,
+        '-W117': true,
         '-W099': true
       },
     },
@@ -31,6 +31,7 @@ module.exports = function(grunt) {
         tasks: ['jshint'],
         options: {
           spawn: false,
+          livereload: true
         },
       },
     },
@@ -85,4 +86,5 @@ module.exports = function(grunt) {
   grunt.registerTask('cover', ['writeFilesforCoverage', 'runCoverage']);
   grunt.registerTask('mocha', ['mochaCoverageReport']);
   grunt.registerTask('duck', ['prompt', 'jsduck']);
+
 };
