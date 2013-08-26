@@ -86,5 +86,4 @@ module.exports = function(grunt) {
   grunt.registerTask('cover', ['writeFilesforCoverage', 'runCoverage']);
   grunt.registerTask('mocha', ['mochaCoverageReport']);
   grunt.registerTask('duck', ['prompt', 'jsduck']);
-
 };
