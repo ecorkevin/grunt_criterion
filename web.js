@@ -3,6 +3,7 @@ var express = require('express');
 var fs = require('fs');
 var express = require("express");
 var app = express();
+app.use(express.static(__dirname + '/styles'));
 app.get('/', function(request, response) {
   var input = fs.readFileSync('index.html');
   var string = input.toString();
@@ -12,6 +13,12 @@ app.get('/log.json', function(request, response) {
   var input = fs.readFileSync('log.json');
   var string = input.toString();
   response.send(string);
+});
+
+app.get('/file/*', function(request, response){
+	var input= fs.readFileSync(request.params[0]);
+	var string = input.toString();
+	response.send(string);
 });
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {

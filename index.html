@@ -1,40 +1,103 @@
 <html><head><title>Error Report</title>    
 <script src="http://localhost:35729/livereload.js"></script>
+<script>LiveReload.on('LiveReloadConnect',function(){
+  console.log('LIVE RELOAD CONNECT');
+  console.dir(arguments);
+});</script>
 	
 <style type="text/css">
-body { font-family:Courier; font-size:small;}
+body { font-family:Courier; font-size:m;}
 .pretty { outline: 1px solid black;font-size:small;}
 .prettyred { outline: 1px solid red; color:red;font-size:small;}
 .prettyblue { outline: 1px solid blue; color:blue;font-size:small;}
 .prettygreen { outline: 1px solid green; color:green;font-size:small;}
+  /* Define a gutter style */
+.CodeMirror-selected { background: red; }
+.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+.backg { background: red; }
+.note-gutter { width: 200px; background: #666666}
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="codemirror.js"></script>
+<link rel="stylesheet" href="codemirror.css">
+<script src="mode/javascript/javascript.js"></script>
 <body>
-	<div id="div1">
+	<select id="selectBox">
+	</select>
+	<div id = "listofErrors">
+	</div>
+	<div id = "errorCode">
 	</div>
 
 <script>
-var obj = $.getJSON("log.json", function(data){
-var table = '<table>';
-if (data.report.length == 0){
-	$('#div1').append("NO ERRORS!");
-} else{
-for (var i=0; i<data.report.length; i++) {
-	
-  table += '<tr class="pretty">';
-  table += '<td>'+data.report[i].file+'</td>';
-  table += '<td class="prettyred">'+data.report[i].error.reason+'</td>';
-  table += '<td class="pretty">'+data.report[i].error.code+'</td>';
-  table += '<th>Line</th><td class="prettygreen">'+data.report[i].error.line+'</td>';
-  table += '<th>Char</th><td class="prettyblue">'+data.report[i].error.character+'</td>';
-  table += '<td>'+data.report[i].error.evidence+'</td>';
-  table += '</tr>';
-}}
-table += '</table>';
-$('#div1').append(table);
-	});
+var unique = [];
+$.getJSON("log.json", function (data) {
+  var obj = {};
+  for (var i = 0; i < data.report.length; i++) {
+    obj[data.report[i].file] = obj[data.report[i].file] || [];
+    obj[data.report[i].file].push({
+      reason: data.report[i].error.reason,
+      line: data.report[i].error.line
+    });
+  }
+  if (data.report.length == 0) {
+    $('#selectBox').append($('<option>', {
+      value: "NO ERRORS!",
+      text: "NO ERRORS!"
+    }))
+  } else {
+    for (var file in obj) {
+      $('#selectBox').append($('<option>', {
+        value: i,
+        text: file
+      }))
+    }
+  };
+  
+//  if ($("#selectBox").length != 0 ){
+  $("#selectBox").change(function () {
+    $.get('file/' + $('#selectBox option:selected').text(), function (data2) {
+      $("#errorCode").empty();
+      var myCodeMirror = CodeMirror(errorCode, {
+        value: data2,
+        mode: "javascript",
+        lineNumbers: true,
+        gutters: ["note-gutter"]
+      });
+      myCodeMirror.setSize(900, "50%");
+      $("#listofErrors").empty();
+      for (var err in obj[$('#selectBox option:selected').text()]) {
+      	$("#listofErrors").append('<a href=#?'+(obj[$('#selectBox option:selected').text()][err].line)+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
+        myCodeMirror.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
+        myCodeMirror.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
+      }
+    });
+  });
+
+
+  if (data.report.length === 1 ) {
+  	    $.get('file/' + data.report[0].file, function (data2) {
+      $("#errorCode").empty();
+      var myCodeMirror = CodeMirror(errorCode, {
+        value: data2,
+        mode: "javascript",
+        lineNumbers: true,
+        gutters: ["note-gutter"]
+      });
+      myCodeMirror.setSize(900, "50%");
+      $("#listofErrors").empty();
+      for (var err in obj[data.report[0].file]) {
+      	//$("#listofErrors").append('<a href=#?'+(obj[data.report[0].file][err].line)-1+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
+        myCodeMirror.addLineClass((obj[data.report[0].file][err].line)-1, "background", "backg");
+        myCodeMirror.setGutterMarker((obj[data.report[0].file][err].line)-1, "note-gutter", document.createTextNode(obj[data.report[0].file][err].reason));
+      }
+    });
+  }
+});
 
 </script>
+
+
 </body>
 </html>
 
