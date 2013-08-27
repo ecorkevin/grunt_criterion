@@ -8,7 +8,6 @@ myApp.setNotifications({
   'Server Status': {}
 });
 myApp.register();
-
 app.use(express.static(__dirname + '/styles'));
 app.get('/', function(request, response) {
   var input = fs.readFileSync('index.html');
@@ -17,16 +16,16 @@ app.get('/', function(request, response) {
 });
 app.get('/log.json', function(request, response) {
   var input = fs.readFileSync('log.json');
-  if(input.toString() == '{"report":[]}'){
-  	  myApp.sendNotification('Server Status', {
-  		title: 'Node Growler online',
-  		text: 'No Errors Present'
-});
+  if (input.toString() == '{"report":[]}') {
+    myApp.sendNotification('Server Status', {
+      title: 'Node Growler online',
+      text: 'No Errors Present'
+    });
   } else {
-  	myApp.sendNotification('Server Status', {
-  		title: 'Node Growler online',
-  		text: 'Errors Still Exist'
-});
+    myApp.sendNotification('Server Status', {
+      title: 'Node Growler online',
+      text: 'Errors Still Exist'
+    });
   }
   var string = input.toString();
   response.send(string);
