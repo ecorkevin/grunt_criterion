@@ -32,7 +32,8 @@
     "grunt-contrib-watch": "~0.5.2",
     "grunt-prompt": "~0.1.2",
     "mocha": "~1.12.0",
-    "live-reload": "~0.2.0"
+    "live-reload": "~0.2.0",
+    "growler": "0.0.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"

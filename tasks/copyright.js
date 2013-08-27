@@ -1,3 +1,4 @@
+/*jshint globalstrict: true*/
 'use strict';
 module.exports = function(grunt) {
   grunt.registerMultiTask('copyright', 'Adds sample comment string', function() {
@@ -14,4 +15,4 @@ module.exports = function(grunt) {
       }
     }
   });
-}
+};

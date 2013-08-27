@@ -1,3 +1,4 @@
+/*jshint globalstrict: true*/
 'use strict';
 module.exports = function(grunt) {
   grunt.registerMultiTask('beautify', 'Runs JS Beautify', function() {
@@ -12,4 +13,4 @@ module.exports = function(grunt) {
       fs.writeFileSync(this.files[i].dest, newdata);
     }
   });
-}
+};

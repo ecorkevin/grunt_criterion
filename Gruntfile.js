@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
-      all: ['*.js'],
+      all: ['*.js', 'tasks/*.js'],
       options: {
         reporter: 'default',
         reporterOutput: 'log.json',
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['*.js', '*.html', '*.json'],
+        files: ['*.js', 'tasks/*.js', '*.html', '*.json'],
         tasks: ['jshint'],
         options: {
           spawn: false,

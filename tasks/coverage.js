@@ -1,3 +1,4 @@
+/*jshint globalstrict: true*/
 'use strict';
 module.exports = function(grunt) {
   var exec = require('child_process').exec;
@@ -9,7 +10,7 @@ module.exports = function(grunt) {
       var newdata = "require('./" + this.files[i].dest + "');\n";
       fs.appendFileSync('test.js', newdata);
     }
-  })
+  });
   grunt.registerTask('runCoverage', 'Generates coverage report on reported js files', function() {
     var done = this.async();
     exec('istanbul cover test.js', function(error, stdout, stderr) {

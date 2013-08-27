@@ -53,6 +53,22 @@ $.getJSON("log.json", function (data) {
       }))
     }
   };
+    	    $.get('file/' + data.report[0].file, function (data2) {
+      $("#errorCode").empty();
+      var myCodeMirror = CodeMirror(errorCode, {
+        value: data2,
+        mode: "javascript",
+        lineNumbers: true,
+        gutters: ["note-gutter"]
+      });
+      myCodeMirror.setSize(900, "50%");
+      $("#listofErrors").empty();
+      for (var err in obj[data.report[0].file]) {
+      	//$("#listofErrors").append('<a href=#?'+(obj[data.report[0].file][err].line)-1+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
+        myCodeMirror.addLineClass((obj[data.report[0].file][err].line)-1, "background", "backg");
+        myCodeMirror.setGutterMarker((obj[data.report[0].file][err].line)-1, "note-gutter", document.createTextNode(obj[data.report[0].file][err].reason));
+      }
+    });
   
 //  if ($("#selectBox").length != 0 ){
   $("#selectBox").change(function () {
