@@ -1,4 +1,5 @@
 /*jshint globalstrict: true*/
+/*global module, require, console*/
 'use strict';
 module.exports = function(grunt) {
   grunt.registerMultiTask('copyright', 'Adds sample comment string', function() {

@@ -10,16 +10,11 @@
 </script>
 	
 <style type="text/css">
-body { font-family:Courier; font-size:m;}
-.pretty { outline: 1px solid black;font-size:small;}
-.prettyred { outline: 1px solid red; color:red;font-size:small;}
-.prettyblue { outline: 1px solid blue; color:blue;font-size:small;}
-.prettygreen { outline: 1px solid green; color:green;font-size:small;}
-  /* Define a gutter style */
-.CodeMirror-selected { background: red; }
-.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
-.backg { background: red; }
-.note-gutter { width: 200px; background: #666666}
+	body { font-family:Courier; font-size:m;}
+	.CodeMirror-selected { background: red; }
+	.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+	.backg { background: red; }
+	.note-gutter { width: 200px; background: #666666}
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="codemirror.js"></script>
@@ -36,7 +31,7 @@ body { font-family:Courier; font-size:m;}
 var unique = [];
 var filename;
 var editor;
-$.getJSON("log.json", function (data) {
+$.getJSON("log.json", function(data) {
 
   var obj = {};
   for (var i = 0; i < data.report.length; i++) {
@@ -46,115 +41,128 @@ $.getJSON("log.json", function (data) {
       line: data.report[i].error.line
     });
   }
-  if (data.report.length == 0) {
+  if (data.report.length === 0) {
     $('#selectBox').append($('<option>', {
       value: "NO ERRORS!",
       text: "NO ERRORS!"
-    }))
+    }));
   } else {
     for (var file in obj) {
       $('#selectBox').append($('<option>', {
         value: i,
         text: file
-      }))
+      }));
     }
-  };
-
-
-if (!data.report[0]){
-	
-} else {
-$.get('file/'+$('#selectBox option:first').text(), function(data2){
-	if (typeof editor === 'undefined'){
-	filename = $('#selectBox option:first').text();
-	$("#letsputcodehere").val(data2);
-	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
-      lineNumbers: true,
-      gutters: ["note-gutter"],
-      mode: "javascript"
-    });
-    editor.setSize(900, "50%");
-          for (var err in obj[$('#selectBox option:first').text()]) {
-        editor.addLineClass((obj[$('#selectBox option:first').text()][err].line)-1, "background", "backg");
-        editor.setGutterMarker((obj[$('#selectBox option:first').text()][err].line)-1, "note-gutter", document.createTextNode(obj[$('#selectBox option:first').text()][err].reason));
-      }
-    editor.on('change', function(){
-    	editor.save();
-    })
-  } else {
-  	editor.toTextArea();
-  		filename = $('#selectBox option:first').text();
-	$("#letsputcodehere").val(data2);
-	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
-      lineNumbers: true,
-      gutters: ["note-gutter"],
-      mode: "javascript"
-    });
-    editor.setSize(900, "50%");
-          for (var err in obj[$('#selectBox option:first').text()]) {
-        editor.addLineClass((obj[$('#selectBox option:first').text()][err].line)-1, "background", "backg");
-        editor.setGutterMarker((obj[$('#selectBox option:first').text()][err].line)-1, "note-gutter", document.createTextNode(obj[$('#selectBox option:first').text()][err].reason));
-      }
-    editor.on('change', function(){
-    	editor.save();
-    })
   }
-})
-}
 
-  $("#selectBox").change(function () {
-    $.get('file/' + $('#selectBox option:selected').text(), function (data2) {
-  	if (typeof editor === 'undefined'){
-  	filename = $('#selectBox option:selected').text();	
-      $("#letsputcodehere").val(data2);
-	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
-      lineNumbers: true,
-      gutters: ["note-gutter"],
-      mode: "javascript"
-    });
-      editor.setSize(900, "50%");
-      $("#listofErrors").empty();
-      for (var err in obj[$('#selectBox option:selected').text()]) {
-        editor.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
-        editor.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
+  if (!data.report[0]) {
+
+  } else {
+    $.get('file/' + $('#selectBox option:first').text(), function(data2) {
+      if (typeof editor === 'undefined') {
+        filename = $('#selectBox option:first').text();
+        $("#letsputcodehere").val(data2);
+        editor = CodeMirror.fromTextArea(document.getElementById(
+          "letsputcodehere"), {
+          lineNumbers: true,
+          gutters: ["note-gutter"],
+          mode: "javascript"
+        });
+        editor.setSize(900, "50%");
+        for (var x in obj[$('#selectBox option:first').text()]) {
+          editor.addLineClass((obj[$('#selectBox option:first').text()][x]
+            .line) - 1, "background", "backg");
+          editor.setGutterMarker((obj[$('#selectBox option:first').text()][
+            x
+          ].line) - 1, "note-gutter", document.createTextNode(obj[$(
+            '#selectBox option:first').text()][x].reason));
+        }
+        editor.on('change', function() {
+          editor.save();
+        });
+      } else {
+        editor.toTextArea();
+        filename = $('#selectBox option:first').text();
+        $("#letsputcodehere").val(data2);
+        editor = CodeMirror.fromTextArea(document.getElementById(
+          "letsputcodehere"), {
+          lineNumbers: true,
+          gutters: ["note-gutter"],
+          mode: "javascript"
+        });
+        editor.setSize(900, "50%");
+        for (var y in obj[$('#selectBox option:first').text()]) {
+          editor.addLineClass((obj[$('#selectBox option:first').text()][y]
+            .line) - 1, "background", "backg");
+          editor.setGutterMarker((obj[$('#selectBox option:first').text()][
+              y
+            ].line) - 1,
+            "note-gutter",
+            document.createTextNode(obj[$('#selectBox option:first').text()]
+              [y].reason)
+          );
+        }
+        editor.on('change', function() {
+          editor.save();
+        });
       }
-    editor.on('change', function(){
-    	editor.save();
-    })
-   } else{
-   	editor.toTextArea();
-   	$("#letsputcodehere").val(data2);
-   	filename = $('#selectBox option:selected').text();
-   	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
-      lineNumbers: true,
-      gutters: ["note-gutter"],
-      mode: "javascript"
     });
-      editor.setSize(900, "50%");
-      $("#listofErrors").empty();
-      for (var err in obj[$('#selectBox option:selected').text()]) {
-        editor.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
-        editor.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
+  }
+
+  $("#selectBox").change(function() {
+    $.get('file/' + $('#selectBox option:selected').text(), function(data2) {
+      if (typeof editor === 'undefined') {
+        filename = $('#selectBox option:selected').text();
+        $("#letsputcodehere").val(data2);
+        editor = CodeMirror.fromTextArea(document.getElementById(
+          "letsputcodehere"), {
+          lineNumbers: true,
+          gutters: ["note-gutter"],
+          mode: "javascript"
+        });
+        editor.setSize(900, "50%");
+        for (var z in obj[$('#selectBox option:selected').text()]) {
+          editor.addLineClass((obj[$('#selectBox option:selected').text()]
+            [z].line) - 1, "background", "backg");
+          editor.setGutterMarker((obj[$('#selectBox option:selected').text()]
+            [z].line) - 1, "note-gutter", document.createTextNode(obj[
+            $('#selectBox option:selected').text()][z].reason));
+        }
+        editor.on('change', function() {
+          editor.save();
+        });
+      } else {
+        editor.toTextArea();
+        $("#letsputcodehere").val(data2);
+        filename = $('#selectBox option:selected').text();
+        editor = CodeMirror.fromTextArea(document.getElementById(
+          "letsputcodehere"), {
+          lineNumbers: true,
+          gutters: ["note-gutter"],
+          mode: "javascript"
+        });
+        editor.setSize(900, "50%");
+        for (var q in obj[$('#selectBox option:selected').text()]) {
+          editor.addLineClass((obj[$('#selectBox option:selected').text()]
+            [q].line) - 1, "background", "backg");
+          editor.setGutterMarker((obj[$('#selectBox option:selected').text()]
+            [q].line) - 1, "note-gutter", document.createTextNode(obj[
+            $('#selectBox option:selected').text()][q].reason));
+        }
+        editor.on('change', function() {
+          editor.save();
+        });
       }
-    editor.on('change', function(){
-    	editor.save();
-    })
-   }
-   });
+    });
   });
 
-$("#saver").click(function(){
-	var data = $("#letsputcodehere").val();
-	socket.emit('this data has changed', data, filename);
-})
-
-
+  $("#saver").click(function() {
+    var data = $("#letsputcodehere").val();
+    socket.emit('this data has changed', data, filename);
+  });
 
 });
-
 </script>
-
-
 </body>
 </html>
 

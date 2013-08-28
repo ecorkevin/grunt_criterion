@@ -31,7 +31,7 @@ app.get('/', function(request, response) {
 
 app.get('/log.json', function(request, response) {
   var input = fs.readFileSync('log.json');
-  if (input.toString() == '{"report":[]}') {
+  if (input.toString() === '{"report":[]}\n') {
     myApp.sendNotification('Server Status', {
       title: 'Node Growler online',
       text: 'No Errors Present'

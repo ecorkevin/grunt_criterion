@@ -5,8 +5,8 @@ module.exports = function(grunt) {
       options: {
         reporter: 'default',
         reporterOutput: 'log.json',
-        '-W117': true,
-        '-W099': true
+        //'-W117': true,
+        //'-W099': true
       },
     },
     beautify: {
