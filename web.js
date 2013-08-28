@@ -7,6 +7,20 @@ var myApp = new growler.GrowlApplication('Simple Growl App');
 myApp.setNotifications({
   'Server Status': {}
 });
+
+var port = process.env.PORT || 7000;
+var server = app.listen(port, function() {
+  console.log("Listening on " + port);
+  //server.close(); //for istanbul coverage test
+});
+
+io = require('socket.io').listen(server);
+io.sockets.on('connection', function(socket) {
+  socket.on('this data has changed', function(data, filename) {
+    fs.writeFileSync(filename, data);
+  });
+});
+
 myApp.register();
 app.use(express.static(__dirname + '/styles'));
 app.get('/', function(request, response) {
@@ -14,6 +28,7 @@ app.get('/', function(request, response) {
   var string = input.toString();
   response.send(string);
 });
+
 app.get('/log.json', function(request, response) {
   var input = fs.readFileSync('log.json');
   if (input.toString() == '{"report":[]}') {
@@ -30,13 +45,9 @@ app.get('/log.json', function(request, response) {
   var string = input.toString();
   response.send(string);
 });
+
 app.get('/file/*', function(request, response) {
   var input = fs.readFileSync(request.params[0]);
   var string = input.toString();
   response.send(string);
-});
-var port = process.env.PORT || 7000;
-var server = app.listen(port, function() {
-  console.log("Listening on " + port);
-  //server.close(); //for istanbul coverage test
 });

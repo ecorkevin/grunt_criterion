@@ -8,7 +8,8 @@ module.exports = function(grunt) {
       var data = fs.readFileSync(this.files[i].dest, 'utf8');
       var newdata = (beautify(data, {
         indent_size: 2,
-        preserve_newlines: false
+        preserve_newlines: true,
+        max_preserve_newlines: 2
       }));
       fs.writeFileSync(this.files[i].dest, newdata);
     }

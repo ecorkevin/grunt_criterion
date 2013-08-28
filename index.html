@@ -4,6 +4,10 @@
   console.log('LIVE RELOAD CONNECT');
   console.dir(arguments);
 });</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:7000/');
+</script>
 	
 <style type="text/css">
 body { font-family:Courier; font-size:m;}
@@ -24,14 +28,16 @@ body { font-family:Courier; font-size:m;}
 <body>
 	<select id="selectBox">
 	</select>
-	<div id = "listofErrors">
-	</div>
-	<div id = "errorCode">
-	</div>
+	<textarea id="letsputcodehere">
+	</textarea>
+	<input type="button" id="saver" value="save">
 
 <script>
 var unique = [];
+var filename;
+var editor;
 $.getJSON("log.json", function (data) {
+
   var obj = {};
   for (var i = 0; i < data.report.length; i++) {
     obj[data.report[i].file] = obj[data.report[i].file] || [];
@@ -53,62 +59,97 @@ $.getJSON("log.json", function (data) {
       }))
     }
   };
-    	    $.get('file/' + data.report[0].file, function (data2) {
-      $("#errorCode").empty();
-      var myCodeMirror = CodeMirror(errorCode, {
-        value: data2,
-        mode: "javascript",
-        lineNumbers: true,
-        gutters: ["note-gutter"]
-      });
-      myCodeMirror.setSize(900, "50%");
-      $("#listofErrors").empty();
-      for (var err in obj[data.report[0].file]) {
-      	//$("#listofErrors").append('<a href=#?'+(obj[data.report[0].file][err].line)-1+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
-        myCodeMirror.addLineClass((obj[data.report[0].file][err].line)-1, "background", "backg");
-        myCodeMirror.setGutterMarker((obj[data.report[0].file][err].line)-1, "note-gutter", document.createTextNode(obj[data.report[0].file][err].reason));
-      }
+
+
+if (!data.report[0]){
+	
+} else {
+$.get('file/'+$('#selectBox option:first').text(), function(data2){
+	if (typeof editor === 'undefined'){
+	filename = $('#selectBox option:first').text();
+	$("#letsputcodehere").val(data2);
+	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
+      lineNumbers: true,
+      gutters: ["note-gutter"],
+      mode: "javascript"
     });
-  
-//  if ($("#selectBox").length != 0 ){
+    editor.setSize(900, "50%");
+          for (var err in obj[$('#selectBox option:first').text()]) {
+        editor.addLineClass((obj[$('#selectBox option:first').text()][err].line)-1, "background", "backg");
+        editor.setGutterMarker((obj[$('#selectBox option:first').text()][err].line)-1, "note-gutter", document.createTextNode(obj[$('#selectBox option:first').text()][err].reason));
+      }
+    editor.on('change', function(){
+    	editor.save();
+    })
+  } else {
+  	editor.toTextArea();
+  		filename = $('#selectBox option:first').text();
+	$("#letsputcodehere").val(data2);
+	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
+      lineNumbers: true,
+      gutters: ["note-gutter"],
+      mode: "javascript"
+    });
+    editor.setSize(900, "50%");
+          for (var err in obj[$('#selectBox option:first').text()]) {
+        editor.addLineClass((obj[$('#selectBox option:first').text()][err].line)-1, "background", "backg");
+        editor.setGutterMarker((obj[$('#selectBox option:first').text()][err].line)-1, "note-gutter", document.createTextNode(obj[$('#selectBox option:first').text()][err].reason));
+      }
+    editor.on('change', function(){
+    	editor.save();
+    })
+  }
+})
+}
+
   $("#selectBox").change(function () {
     $.get('file/' + $('#selectBox option:selected').text(), function (data2) {
-      $("#errorCode").empty();
-      var myCodeMirror = CodeMirror(errorCode, {
-        value: data2,
-        mode: "javascript",
-        lineNumbers: true,
-        gutters: ["note-gutter"]
-      });
-      myCodeMirror.setSize(900, "50%");
+  	if (typeof editor === 'undefined'){
+  	filename = $('#selectBox option:selected').text();	
+      $("#letsputcodehere").val(data2);
+	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
+      lineNumbers: true,
+      gutters: ["note-gutter"],
+      mode: "javascript"
+    });
+      editor.setSize(900, "50%");
       $("#listofErrors").empty();
       for (var err in obj[$('#selectBox option:selected').text()]) {
-      	$("#listofErrors").append('<a href=#?'+(obj[$('#selectBox option:selected').text()][err].line)+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
-        myCodeMirror.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
-        myCodeMirror.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
+        editor.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
+        editor.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
       }
+    editor.on('change', function(){
+    	editor.save();
+    })
+   } else{
+   	editor.toTextArea();
+   	$("#letsputcodehere").val(data2);
+   	filename = $('#selectBox option:selected').text();
+   	editor = CodeMirror.fromTextArea(document.getElementById("letsputcodehere"), {
+      lineNumbers: true,
+      gutters: ["note-gutter"],
+      mode: "javascript"
     });
+      editor.setSize(900, "50%");
+      $("#listofErrors").empty();
+      for (var err in obj[$('#selectBox option:selected').text()]) {
+        editor.addLineClass((obj[$('#selectBox option:selected').text()][err].line) - 1, "background", "backg");
+        editor.setGutterMarker((obj[$('#selectBox option:selected').text()][err].line) - 1, "note-gutter", document.createTextNode(obj[$('#selectBox option:selected').text()][err].reason));
+      }
+    editor.on('change', function(){
+    	editor.save();
+    })
+   }
+   });
   });
 
+$("#saver").click(function(){
+	var data = $("#letsputcodehere").val();
+	socket.emit('this data has changed', data, filename);
+})
 
-  if (data.report.length === 1 ) {
-  	    $.get('file/' + data.report[0].file, function (data2) {
-      $("#errorCode").empty();
-      var myCodeMirror = CodeMirror(errorCode, {
-        value: data2,
-        mode: "javascript",
-        lineNumbers: true,
-        gutters: ["note-gutter"]
-      });
-      myCodeMirror.setSize(900, "50%");
-      $("#listofErrors").empty();
-      for (var err in obj[data.report[0].file]) {
-      	//$("#listofErrors").append('<a href=#?'+(obj[data.report[0].file][err].line)-1+'>'+obj[$("#selectBox option:selected").text()][err].reason+'</a><br/>');
-        myCodeMirror.addLineClass((obj[data.report[0].file][err].line)-1, "background", "backg");
-        myCodeMirror.setGutterMarker((obj[data.report[0].file][err].line)-1, "note-gutter", document.createTextNode(obj[data.report[0].file][err].reason));
-      }
-    });
-  }
+
+
 });
 
 </script>

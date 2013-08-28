@@ -41,25 +41,25 @@ Once jshint passes to satisfaction, it's recommended to run this to neatly forma
 
 This adds a custom comment to the beginning of your js file, should you choose.   (WORK IN PROGRESS)
 
-### <tt>TABLE OF JSHINT ERRORS</tt>
+### <tt>JSHINT ERROR EDITOR</tt>
 
-If you're so inclined, this package takes advantage of an express webserver.  Running
+If you're so inclined, this package takes advantage of an express webserver and code mirror.  Running
 
 		node web.js
 		
-Fires a webserver on port 3000 that keeps track of your log.json file for easy viewing.  Simply navigate to
+Fires a webserver on port 7000 that keeps track of the present errors inside log.json.  Simply navigate to
 
-		localhost:3000
+		localhost:7000
 
-to view any errors.  Refreshing the page after a grunt will also show the latest errors/changes to your directory.
+to view any errors.  You can modify and save the errors right in the browser!
 
 ### <tt>Watcher</tt>
 
-To make that table above even easier to use, you can run
+To make that editor above even easier to use, you can run
 
 		grunt watch
 		
-on your directory.  Every changed file will be jshinted, and all errors will automatically show up on localhost
+on your directory.  Every saved watch file will be jshinted, and all errors will automatically show up in the localhost editor.
 
 ### <tt>Code Coverage</tt>
 
